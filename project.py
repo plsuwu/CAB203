@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import graphs
 import digraphs
 import csv
