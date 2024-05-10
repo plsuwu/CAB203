@@ -22,23 +22,28 @@ from collections import defaultdict
 # (4, 0)
 # (3, 4)
 def gamesOK(games: set) -> bool:
-    # set of all vertices == all players
-    V = {v for (v, u) in games} | {u for (v, u) in games}
-    E = games | {(v, u) for (u, v) in games}  # 2|E| -> all (a,b) && (b,a)
 
+    # number of unique vertexes
+    S = {v for (v, u) in games} | {u for (v, u) in games}
+    E = games | {(v, u) for (u, v) in games} # all possible edges 2|E|
+
+    # unique vertices x that form an edge with any u in S
     N = {x: {u for (v, u) in E if v == x} for (x, y) in E}
-    d = {
-        len(u) for v, u in N.items()
-    }  # degrees == number of games each player has played
 
+    # number of edges containing both v and any vertex u in S
+    d = { len(N[u]) for u in S }
+
+    # invalid if there is a differing number of edges for any u in N
     if len(d) != 1:
         return False
 
-    # this doesnt make sense lol
-    played_against = all(
-        (len(N[v] & N[u])) >= 2 for v in N for u in N if v != u and u not in N[v]
-    )
-    return played_against
+    # if (u,v) is not an edge in E, determine the intersect for non-(v,u) edges that
+    # contain exactly one of (v,u) as a vertex
+    #
+    # returns true if the length of this intersect is >= 2, otherwise false
+    e = all( (len(N[v] & N[u])) >= 2 for u in S for v in S if v != u and u not in N[v] )
+
+    return e
 
 
 def referees(games, refereecsvfilename):

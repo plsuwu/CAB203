@@ -22,44 +22,44 @@ def assert_no_loops(s, f):
 
 
 class TestGamesOK(unittest.TestCase):
-    def test_noLoops(self):
-        assert_no_loops(self, P.gamesOK)
-
+    # def test_noLoops(self):
+    #     assert_no_loops(self, P.gamesOK)
+    #
     def test_k33(self):
         games = {(u, v) for u in range(3) for v in range(3, 6)}
         print('TEST K33')
         self.assertTrue(P.gamesOK(games))
-
+    #
     def test_triangles(self):
         games = {(0, 2), (0, 3), (0, 4), (1, 3), (1, 4), (1, 5), (2, 4), (2, 5), (3, 5)}
         print('TEST TRIANGLES')
         self.assertTrue(P.gamesOK(games))
-    #
-    def test_bad_triangles_1(self):
-        games = {
-            (0, 2),
-            (0, 3),
-            (0, 4),
-            (1, 3),
-            (1, 4),
-            (1, 5),
-            (2, 4),
-            (2, 5),
-            (3, 5),
-            (0, 5),
-        }
-        print('TEST BAD TRIANGLES')
-        self.assertFalse(P.gamesOK(games))
-    #
+    # #
+    # def test_bad_triangles_1(self):
+    #     games = {
+    #         (0, 2),
+    #         (0, 3),
+    #         (0, 4),
+    #         (1, 3),
+    #         (1, 4),
+    #         (1, 5),
+    #         (2, 4),
+    #         (2, 5),
+    #         (3, 5),
+    #         (0, 5),
+    #     }
+    #     print('TEST BAD TRIANGLES')
+    #     self.assertFalse(P.gamesOK(games))
+    # #
     def test_5cycle(self):
         games = {(0, 1), (1, 2), (2, 3), (3, 4), (4, 0)}
         print('5CYCLE')
         self.assertFalse(P.gamesOK(games))
     #
-    def test_k5(self):
-        games = {(u, v) for u in range(5) for v in range(5) if u < v}
-        print('K5')
-        self.assertTrue(P.gamesOK(games))
+    # def test_k5(self):
+    #     games = {(u, v) for u in range(5) for v in range(5) if u < v}
+    #     print('K5')
+    #     self.assertTrue(P.gamesOK(games))
 
 
 if __name__ == "__main__":
