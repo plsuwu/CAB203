@@ -37,10 +37,13 @@ def gamesOK(games: set) -> bool:
     if len(d) != 1:
         return False
 
-    # if (u,v) is not an edge in E, determine the intersect for non-(v,u) edges that
-    # contain exactly one of (v,u) as a vertex
+    # ----------------------------------------------------
+    # i feel like there is a better way to write this code
+    # ----------------------------------------------------
+    # if (u,v) is not an edge in E, determine the intersect for non-(u,v) edges that
+    # contain exactly one of (u,v) as a vertex
     #
-    # returns true if the length of this intersect is >= 2, otherwise false
+    # valid if the length of this intersect is >= 2, otherwise invalid
     e = all( (len(N[v] & N[u])) >= 2 for u in S for v in S if v != u and u not in N[v] )
 
     return e
