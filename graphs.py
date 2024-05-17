@@ -25,7 +25,9 @@ def degree(V, E, u):
    return len(N(V, E, u))
 
 def distanceClasses(V, E, u, D = None):
-   """Given a graph (V,E) and a starting vertex u, outputs a list of distances classes.  That is, returns a partition of the vertices into sets of fixed distances from u, where u is in the distance class for distance 0.  Behaviour is undefined if the graph is disconnected."""
+   """Given a graph (V,E) and a starting vertex u, outputs a list of distances classes.
+   That is, returns a partition of the vertices into sets of fixed distances from u, where u is in the distance class for distance 0.
+   Behaviour is undefined if the graph is disconnected."""
    if D is None:                             # j = 0 case
       assertIsUndirectedGraph(V, E)
       D = [ {u} ]                            # D[0] = D_0 = {u}
@@ -37,7 +39,8 @@ def distanceClasses(V, E, u, D = None):
    return distanceClasses(Vnew, E, None, Dnew)
 
 def distance(V, E, u, v):
-   """Given two vertices u,v in the graph (V,E) return the length of the shortest path from u to v, or float('inf') if no path exists.  float('inf') is used as it can be compared with other numbers and is >= any integer."""
+   """Given two vertices u,v in the graph (V,E) return the length of the shortest path from u to v, or float('inf') if no path exists.
+   float('inf') is used as it can be compared with other numbers and is >= any integer."""
    D = distanceClasses(V, E, u)
    for j, Dj in enumerate(D):
       if v in Dj:
@@ -57,7 +60,8 @@ def connected(V, E):
    return V == set.union(*D)
 
 def spanningTree(V, E, r):
-   """Find a spanning tree in graph (V,E) rooted on r where all paths from vertex r to other vertices are shortest.  If the graph is disconnected then the spanning tree only covers the component containing r.
+   """Find a spanning tree in graph (V,E) rooted on r where all paths from vertex r to other vertices are shortest.
+   If the graph is disconnected then the spanning tree only covers the component containing r.
 
    The tree is returned as a dictionary where keys are vertices and values are the parent of that vertex in the spanning tree.  The root has parent None."""
 
@@ -74,15 +78,19 @@ def spanningTree(V, E, r):
    return parents
 
 def pathFromTree(parents, v):
-   """Find a shortest path from the root to vertex v in a tree.  The tree must be given as a dictionary where keys are vertices and values are the parent verticex of the key.  The path is returned as a list of vertices starting from the root and ending at v (inclusive).  If v is not in the tree then None is returned."""
+   """Find a shortest path from the root to vertex v in a tree.
+   The tree must be given as a dictionary where keys are vertices and values are the parent verticex of the key.
+   The path is returned as a list of vertices starting from the root and ending at v (inclusive).
+   If v is not in the tree then None is returned."""
    if v not in parents: return None        # vertex not in the tree, no path.
    u = parents[v]
    if u == None: return [v]                # at root? Stop
    return pathFromTree(parents, u) + [v]   # go to parent, then to v
 
 def shortestPath(V, E, start, end, D=None):
-   """Solve the shortest path problem in graph (V,E) from vertex start to vertex end.  Path is returned as a list of vertices.  If there is no such path then None is returned."""
-
+   """Solve the shortest path problem in graph (V,E) from vertex start to vertex end.
+   Path is returned as a list of vertices.
+   If there is no such path then None is returned."""
    if start is end: return [ start ]  # base case
 
    # Get the distance classes in the outer function call

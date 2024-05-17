@@ -7,7 +7,6 @@ import csv
 from functools import reduce
 from typing import Tuple
 
-
 # 1. determine whether the tournament structure has the required properties:
 #
 #   a) for each distinct player, either they play against each other, or there are (minimum) two
@@ -62,9 +61,7 @@ def gamesOK(games: set) -> bool:
     return e
 
 
-def referees(
-    games: set[Tuple[str, str]], refereecsvfilename: str
-) -> dict[Tuple[str, str], str] | None:
+def referees(games: set[Tuple[str,str]], refereecsvfilename: str) -> (dict[Tuple[str, str], str] | None):
 
     # Referee,  Conflict1,  Conflict2,  Conflict3,  Conflict4
     # Joe,      Ashley,     Bob,        Charlie,    Ellie
@@ -79,37 +76,79 @@ def referees(
     # with open(refereecsvfilename, newline="") as f:
     #     reader = csv.reader(f)
 
-    # parse the csv into a dictionary of each referee and a set of the referee's conflicts
-    # discard the header column
+        # parse the csv into a dictionary of each referee and a set of the referee's conflicts
+        # discard the header column
     with open(refereecsvfilename, newline="") as f:
         reader = csv.reader(f)
 
         # parse the csv into a dictionary of each referee and a set of the referee's conflicts
         # discard the header column
-        conflicts = {
-            row[0].strip(): set(row[1:])
-            for row in reader
-            if row[0] != "Referee"
-        }
+        # referee_conflicts = { row[0]: set(row[1:]) for row in reader if row[0] != "Referee" }
+        # checker = { game: ref for ref in referee_conflicts.keys() for game in games if ref not in set( { v for (v,u) in games } | { v for (u,v) in games })}
 
-        # find edges between edges in games `(p,o)` as a set of vertices g and referees as a set of vertices r
-        # ignoring those where either `p | o` is found in a set of vertices `conflicts` that form an edge with r
-        E = [ (g, r) for g in games for r in set(conflicts) if all(p not in conflicts[r] for p in g) ]
 
-        # find a maximum matching set of edges in the graph G of (games | referees, edges E = (games, refs))
-        max = digraphs.maxMatching(set(games), set(conflicts.keys()), E)
 
-        # filter to the expected set of games and their referees such that the graph G = { (p,o): r }
-        matched = {g: r for g, r in max if isinstance(g, tuple) and isinstance(r, str)}
+        conflicts = { row[0]: set(row[1:]) for row in reader if row[0] != "Referee" }
+        V = { r for r in conflicts.keys() } | { p for (p,o) in games } | { o for (p,o) in games }
 
-        # if the output of matched edges contains the same number of items as the input, each game could be
-        # assigned a referee without conflicts
-        if len(matched) == len(games):
-            return matched
+        print('games-> ', games ,'\n')
+        print('r -> ', { r for r in conflicts.keys() } )
+        print('r_c -> ', conflicts)
+        print('V -> ', V)
 
-        # otherwise, return `None` as our input is invalid.
-        else:
-            return None
+        def assignable(r, u, c):
+            return all(v not in c[r] for v in u and r not in u)
+
+        def graph(E, c):
+            def e(g):
+                return [filter(
+                        lambda r: assignable(r, g, c),
+                        conflicts.keys()
+                    )]
+
+        def bipart_match(g, G, m_r, seen):
+            def try_match(r):
+                if r not in seen:
+                    seen.add(r)
+                    if r not in m_r or bipart_match(m_r[r], G, m_r, seen):
+                        m_r[r] = g
+                        return True
+                return False
+
+            return any(map(try_match, graph[game]))
+
+        def match(G):
+            match_r = {}
+            match_l = {}
+            { bipart_match(g, G, match_r, seen = set()) for g in games }
+            match_l = { m_r[ref]: ref for ref in match_r }
+            return match_l
+
+
+        G = graph(games,conflicts)
+        max = match(graph)
+
+        print(max)
+        # assigned = set()
+
+        # print(E)
+        # return E
+
+        # print('{referees_a: { conflict_a, conflict_b, ... }}-> ', referee_conflicts, '\n')
+
+
+
+        # return checker if checker != {} else None
+    # checker = { game: ref for ref in referee_conflicts.keys() for game in games if ref not in set( { v for (v,u) in games } | { v for (u,v) in games })}
+
+
+
+        #
+        # # find all players and their opponents as a set of vertices V
+        # V = { u for (u,v) in games } | { v for (u,v) in games }
+
+
+
 
 def gameGroups(assignedReferees):
     pass
