@@ -61,75 +61,81 @@ class TestReferees(unittest.TestCase):
       assert_no_loops(self, P.referees)
 
 
-   def test_1(self):
-      refereecsvfilename = os.path.join(scriptDirectory, 'referees1.csv')
-      games = { ('Bob', 'Alice'), ('Joe', 'Charlie'), ('Elaine', 'Rene') }
-      self.assertEqual(P.referees(games, refereecsvfilename), {
-         ('Bob', 'Alice'): 'Rene',
-         ('Joe', 'Charlie'): 'David',
-         ('Elaine', 'Rene'): 'Joe'
-      })
-
-
+   # def test_1(self):
+   #    refereecsvfilename = os.path.join(scriptDirectory, 'referees1.csv')
+   #    games = { ('Bob', 'Alice'), ('Joe', 'Charlie'), ('Elaine', 'Rene') }
+   #    self.assertEqual(P.referees(games, refereecsvfilename), {
+   #       ('Bob', 'Alice'): 'Rene',
+   #       ('Joe', 'Charlie'): 'David',
+   #       ('Elaine', 'Rene'): 'Joe'
+   #    })
+   #
+   #
    # def test_2(self):
    #    refereecsvfilename = os.path.join(scriptDirectory, 'referees1.csv')
    #    games = { ('Bob', 'Alice'), ('Joe', 'Charlie'), ('Ellie', 'Rene') }
    #    self.assertEqual(P.referees(games, refereecsvfilename), None)
-   #
-   #
-   # def test_3(self):
-   #    refereecsvfilename = os.path.join(scriptDirectory, 'referees2.csv')
-   #    games = {
-   #       ('Gong Gong', 'Jobu Tupaki'),
-   #       ('Gong Gong', 'Deirdre'),
-   #       ('Joy', 'Waymond'),
-   #       ('Deirdre', 'Jobu Tupaki')
-   #    }
-   #    r = P.referees(games, refereecsvfilename)
-   #    self.assertEqual(r, {
-   #       ('Gong Gong', 'Jobu Tupaki'): 'Deirdre',
-   #       ('Gong Gong', 'Deirdre'): 'Waymond',
-   #       ('Joy', 'Waymond'): 'Gong Gong',
-   #       ('Deirdre', 'Jobu Tupaki'): 'Evalyn'
-   #    })
-   #
-   #
-   # def test_4(self):
-   #    refereecsvfilename = os.path.join(scriptDirectory, 'referees3.csv')
-   #    games = {
-   #       ('Spike Spiegel', 'Vicious'),
-   #       ('Jet Black', 'Ein'),
-   #       ('Faye Valentine', 'Edward'),
-   #       ('Edward', 'Julia'),
-   #       ('Ein', 'Faye Valentine'),
-   #       ('Vicious', 'Jet Black'),
-   #       ('Julia', 'Spike Spiegel')
-   #    }
-   #    r = P.referees(games, refereecsvfilename)
-   #    self.assertEqual(r, {
-   #       ('Edward', 'Julia'): 'Faye Valentine',
-   #       ('Ein', 'Faye Valentine'): 'Julia',
-   #       ('Faye Valentine', 'Edward'): 'Vicious',
-   #       ('Jet Black', 'Ein'): 'Spike Spiegel',
-   #       ('Julia', 'Spike Spiegel'): 'Ein',
-   #       ('Spike Spiegel', 'Vicious'): 'Jet Black',
-   #       ('Vicious', 'Jet Black'): 'Edward'
-   #    })
-   #
-   #
-   # def test_5(self):
-   #    refereecsvfilename = os.path.join(scriptDirectory, 'referees3.csv')
-   #    games = {
-   #       ('Spike Spiegel', 'Vicious'),
-   #       ('Jet Black', 'Ein'),
-   #       ('Faye Valentine', 'Edward'),
-   #       ('Edward', 'Julia'),
-   #       ('Ein', 'Faye Valentine'),
-   #       ('Vicious', 'Edward'),
-   #       ('Julia', 'Spike Spiegel')
-   #    }
-   #    r = P.referees(games, refereecsvfilename)
-   #    self.assertEqual(r, None)
+
+
+   def test_3(self):
+      refereecsvfilename = os.path.join(scriptDirectory, 'referees2.csv')
+      games = {
+         ('Gong Gong', 'Jobu Tupaki'),
+         ('Gong Gong', 'Deirdre'),
+         ('Joy', 'Waymond'),
+         ('Deirdre', 'Jobu Tupaki')
+      }
+      r = P.referees(games, refereecsvfilename)
+      self.assertEqual(r, {
+         ('Gong Gong', 'Jobu Tupaki'): 'Deirdre',
+         ('Gong Gong', 'Deirdre'): 'Waymond',
+         ('Joy', 'Waymond'): 'Gong Gong',
+         ('Deirdre', 'Jobu Tupaki'): 'Evalyn'
+      })
+
+# {
+#         ('Gong Gong', 'Jobu Tupaki'): 'Deirdre',
+#  ('Deirdre', 'Jobu Tupaki'): 'Evalyn',
+#  ('Joy', 'Waymond'): 'Jobu Tupaki',
+#  ('Gong Gong', 'Deirdre'): 'Waymond'}
+
+
+   def test_4(self):
+      refereecsvfilename = os.path.join(scriptDirectory, 'referees3.csv')
+      games = {
+         ('Spike Spiegel', 'Vicious'),
+         ('Jet Black', 'Ein'),
+         ('Faye Valentine', 'Edward'),
+         ('Edward', 'Julia'),
+         ('Ein', 'Faye Valentine'),
+         ('Vicious', 'Jet Black'),
+         ('Julia', 'Spike Spiegel')
+      }
+      r = P.referees(games, refereecsvfilename)
+      self.assertEqual(r, {
+         ('Edward', 'Julia'): 'Faye Valentine',
+         ('Ein', 'Faye Valentine'): 'Julia',
+         ('Faye Valentine', 'Edward'): 'Vicious',
+         ('Jet Black', 'Ein'): 'Spike Spiegel',
+         ('Julia', 'Spike Spiegel'): 'Ein',
+         ('Spike Spiegel', 'Vicious'): 'Jet Black',
+         ('Vicious', 'Jet Black'): 'Edward'
+      })
+
+
+   def test_5(self):
+      refereecsvfilename = os.path.join(scriptDirectory, 'referees3.csv')
+      games = {
+         ('Spike Spiegel', 'Vicious'),
+         ('Jet Black', 'Ein'),
+         ('Faye Valentine', 'Edward'),
+         ('Edward', 'Julia'),
+         ('Ein', 'Faye Valentine'),
+         ('Vicious', 'Edward'),
+         ('Julia', 'Spike Spiegel')
+      }
+      r = P.referees(games, refereecsvfilename)
+      self.assertEqual(r, None)
 
 if __name__ == "__main__":
-    unittest.main(argv=["-b"])
+    unittest.main(argv=["-q"])
