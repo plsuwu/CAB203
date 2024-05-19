@@ -82,7 +82,8 @@ def findPath(V, E, start, end, path = None):
    return None
 
 def augmentingEdges(V, E, w, f):
-   """Given an anti-symmetric directed graph, edge weights w, and a valid flow f, returns an edge set representing edges that can be in an augmenting path. """
+   """Given an anti-symmetric directed graph, edge weights w, and a valid flow f,
+   returns an edge set representing edges that can be in an augmenting path. """
    # forward edges
    E1 = { (u,v) for (u,v) in E if f[(u,v)] < w[(u,v)] }
 
@@ -91,7 +92,8 @@ def augmentingEdges(V, E, w, f):
    return E1 | E2
 
 def augmentingPath(V, E, w, f, s, d):
-   """Given an anti-symmetric directed graph, edge weights w, and a valid flow f, source vertex s and drain vertex d, returns an augmenting path as a list of vertices."""
+   """Given an anti-symmetric directed graph, edge weights w, and a valid flow f,
+   source vertex s and drain vertex d, returns an augmenting path as a list of vertices."""
    Enew = augmentingEdges(V, E, w, f)
    return findPath(V, Enew, s, d)
 
@@ -126,7 +128,8 @@ def augmentFlow(path, f, w):
    return g
 
 def maxFlow(V, E, w, s, d):
-   """Given an anti-symmetric directed graph, edge weights w, a valid flow f, source vertex s and drain vertex d, returns a maximum flow. """
+   """Given an anti-symmetric directed graph, edge weights w, a valid flow f, source vertex s and drain vertex d,
+   returns a maximum flow. """
    f = { e: 0 for e in E }  # initial flow all 0
 
    # augment along augmenting paths as long as we can
@@ -136,9 +139,7 @@ def maxFlow(V, E, w, s, d):
 
 def maxMatching(A, B, E):
    """ Given a graph G = (A | B, E) with bipartition A, B find a maximum matching, returned as a set of edges.
-
    G is undirected.
-
    The matching is returned as a set of undirected edges.
    """
 

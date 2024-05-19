@@ -131,7 +131,8 @@ def bipartition(V, E):
    return A | A2, B | B2                   # The graph was disconnected, so no edges between A and A2 or between B and B2
 
 def colourClassesFromColouring(C):
-   """Given a graph colouring in the form of a dictionary C with keys being vertices and values being colours, return a partition of the vertices where each set in the partition has the same colour.
+   """Given a graph colouring in the form of a dictionary C with keys being vertices and values being colours,
+   return a partition of the vertices where each set in the partition has the same colour.
    """
 
    return [
@@ -141,9 +142,13 @@ def colourClassesFromColouring(C):
 
 
 def minColouring(V,E, k=None, C=None, kbest=None, Cbest=None):
-   """Given a graph (V,E) determines the chromatic number of the graph.  Returns (k, C) where k is an integer giving the chromatic number and C is a dictionary with keys V and values in 0, ..., k-1 giving the colour for each vertex.
+   """Given a graph (V,E) determines the chromatic number of the graph.
+   Returns (k, C) where k is an integer giving the chromatic number and C is a dictionary with keys V
+   and values in 0, ..., k-1 giving the colour for each vertex.
 
-   Note that the return type here does not match the lecture's definition, which is a partition into k sets.  If the partition is desired then it can be obtained from the returned C with colourClassesFromColouring(C).
+   Note that the return type here does not match the lecture's definition,
+   which is a partition into k sets.  If the partition is desired then it can be
+   obtained from the returned C with colourClassesFromColouring(C).
 
    If the graph has a loop then no colouring exists. float('inf'), dict() returned. """
 
