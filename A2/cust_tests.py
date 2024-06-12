@@ -137,9 +137,9 @@ def assert_no_loops(s, f):
 #       r = P.referees(games, refereecsvfilename)
 #       self.assertEqual(r, None)
 
-class TestgameGroups(unittest.TestCase):
-   def test_no_loops(self):
-      assert_no_loops(self, P.gameGroups)
+# class TestgameGroups(unittest.TestCase):
+#    def test_no_loops(self):
+#       assert_no_loops(self, P.gameGroups)
 
 
    # def test_1(self):
@@ -195,19 +195,42 @@ class TestgameGroups(unittest.TestCase):
    # #    self.checkGameGroups(assignedReferees, schedule)
    #
    #
-   def test_gameGroups_5(self):
+   # def test_gameGroups_5(self):
+   #    assignedReferees = {
+   #       ('Alice', 'Bob'): 'Rene',
+   #       ('Elaine', 'Charlie'): 'Dave',
+   #       ('Rene', 'Elaine'): 'Alice',
+   #       ('Dave', 'Bob'): 'Charlie',
+   #       ('Alice', 'Rene'): 'Dave',
+   #       ('Dave', 'Elaine'): 'Rene'
+   #    }
+   #    schedule = P.gameGroups(assignedReferees)
+   #    self.assertEqual(len(schedule), 4)
+   #    self.checkGameGroups(assignedReferees, schedule)
+   # #
+
+class TestGamesSchedule(unittest.TestCase):
+   def test_no_loops(self):
+      assert_no_loops(self, P.gameSchedule)
+
+
+   def test_1(self):
       assignedReferees = {
-         ('Alice', 'Bob'): 'Rene',
-         ('Elaine', 'Charlie'): 'Dave',
-         ('Rene', 'Elaine'): 'Alice',
-         ('Dave', 'Bob'): 'Charlie',
-         ('Alice', 'Rene'): 'Dave',
-         ('Dave', 'Elaine'): 'Rene'
+         ('Alice', 'Bob'): 'Charlie',
+         ('Charlie', 'Bob'): 'Rene'
       }
-      schedule = P.gameGroups(assignedReferees)
-      self.assertEqual(len(schedule), 4)
-      self.checkGameGroups(assignedReferees, schedule)
-   #
+
+      gameGroups = [
+         { ('Alice', 'Bob') },
+         { ('Charlie', 'Bob') },
+      ]
+
+      order = P.gameSchedule(assignedReferees, gameGroups)
+      self.assertEqual(order, [
+         { ('Charlie', 'Bob') },
+         { ('Alice', 'Bob') },
+      ])
+
 
 
 if __name__ == "__main__":

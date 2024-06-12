@@ -1,0 +1,20 @@
+#!/usr/bin/env python
+
+import numpy as np
+from numpy.linalg import inv
+import csv
+
+
+def blendWheat(csvfilename):
+    # 'high protein'-grade wheat:
+    #   > min.  14%     protein, by weight
+    #   > max   12.5%   moisture, by weight
+    #
+    # determine how the wheat should be blended from the three bins in order to
+    # maximize the amount of high protein-grade wheat that can be sold.
+    csv_file = open(csvfilename)
+    csv = read(csv_file)
+
+    print(csv)
+
+    return blend, amount
