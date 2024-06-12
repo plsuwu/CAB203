@@ -1,5 +1,0 @@
-import probability
-
-def chooseCropInsurance(premiums, inputCost, contractPrice, lastYearOutcome, state):
-    # your code here
-    return insurance, state

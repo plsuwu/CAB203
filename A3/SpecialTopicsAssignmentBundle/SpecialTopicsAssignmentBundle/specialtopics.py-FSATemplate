@@ -1,5 +1,0 @@
-import re
-
-def reChatParseCommand(message, state):
-    # Your code here
-    return action, state

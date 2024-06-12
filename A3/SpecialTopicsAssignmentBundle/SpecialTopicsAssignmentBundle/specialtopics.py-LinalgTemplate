@@ -1,8 +1,0 @@
-import numpy as np
-from numpy.linalg import inv
-import csv
-
-
-def blendWheat(csvfilename):
-    # your code here
-    return blend, amount
